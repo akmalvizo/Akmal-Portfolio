@@ -1,86 +1,58 @@
 # Muhammad Akmal — ML Engineer Portfolio
 
-> A production-ready, dark-themed portfolio website built for a Junior Machine Learning Engineer.  
-> Live at: **[your-vercel-url.vercel.app](https://your-vercel-url.vercel.app)**
+A production-ready, dark-themed portfolio for a Junior Machine Learning Engineer.
+
+**Live:** [Deploy link here after Vercel publish]
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
-| Layer | Technology |
+| | |
 |---|---|
-| Framework | React 19 + Vite 8 |
+| Framework | React 18 + Vite 5 |
 | Styling | Tailwind CSS v4 |
-| Animations | Framer Motion 12 |
+| Animations | Framer Motion 11 |
 | Icons | Lucide React + React Icons |
-| Type animation | react-type-animation |
 | Deployment | Vercel |
 
 ---
 
-## 📁 Project Structure
-
-```
-src/
-├── assets/          ← Images (photo, logo)
-├── components/
-│   ├── common/      ← Button, Badge, SectionHeading
-│   ├── layout/      ← Navbar, Footer, Section
-│   └── sections/    ← Hero, About, Skills, Projects,
-│                       MLWorkflow, Experience, Certifications, Contact
-├── data/            ← All content lives here (edit these files)
-│   ├── about.js     ← Name, tagline, bio, stats
-│   ├── projects.js  ← Project cards
-│   ├── skills.js    ← Skill categories
-│   ├── experience.js
-│   ├── certifications.js
-│   └── workflow.js  ← ML pipeline steps
-├── hooks/           ← useActiveSection, useScrollAnimation
-└── index.css        ← Global styles + design tokens
-public/
-├── resume/
-│   └── resume.pdf   ← Your resume (linked from Download button)
-└── images/          ← Project screenshots
-```
-
----
-
-## ⚡ Getting Started
+## Quick Start
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/akmalvizo/ml-portfolio.git
-cd ml-portfolio
+# 1. Clone
+git clone https://github.com/akmalvizo/akmal-portfolio.git
+cd akmal-portfolio
 
-# 2. Install dependencies
+# 2. Install
 npm install
 
-# 3. Start development server
-npm run dev
-# → http://localhost:5173
+# 3. Dev server
+npm run dev        # http://localhost:5173
 
-# 4. Build for production
-npm run build
+# 4. Production build
+npm run build      # outputs to dist/
 ```
 
 ---
 
-## ✏️ How to Update Content
+## Editing Content
 
-All personal content is in `src/data/` — **no component code needs to change**.
+All personal content lives in `src/data/` — no component changes needed:
 
-| File | What to edit |
+| File | Controls |
 |---|---|
-| `src/data/about.js` | Name, tagline, bio, stats, education |
-| `src/data/projects.js` | Add / update projects |
-| `src/data/skills.js` | Add / update skills |
-| `src/data/experience.js` | Work & education timeline |
-| `src/data/certifications.js` | Certificates |
+| `src/data/about.js` | Name, tagline, bio, stats, social links |
+| `src/data/projects.js` | Project cards |
+| `src/data/skills.js` | Skill categories |
+| `src/data/experience.js` | Experience cards |
+| `src/data/certifications.js` | Certificate cards + verify links |
 | `src/data/workflow.js` | ML pipeline steps |
 
 ---
 
-## 🖼️ Replacing Assets
+## Key Assets
 
 | Asset | Path |
 |---|---|
@@ -91,20 +63,42 @@ All personal content is in `src/data/` — **no component code needs to change**
 
 ---
 
-## 🌐 Deploy to Vercel
+## Deploy to Vercel
 
+### Option A — GitHub integration (recommended)
+1. Push this repo to GitHub
+2. Go to [vercel.com](https://vercel.com) → New Project → Import from GitHub
+3. Vercel auto-detects Vite — click **Deploy**
+
+### Option B — Vercel CLI
 ```bash
-# Install Vercel CLI
 npm i -g vercel
-
-# Deploy
 vercel
 ```
 
-Or connect your GitHub repo directly at [vercel.com](https://vercel.com) for automatic deployments on every push.
+### Vercel settings (auto-detected, no manual config needed)
+| Setting | Value |
+|---|---|
+| Framework | Vite |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+| Install Command | `npm install` |
+| Root Directory | *(leave empty)* |
 
 ---
 
-## 📄 License
+## Environment Variables
 
-MIT — free to use and customise.
+If using EmailJS contact form, add these in Vercel dashboard → Settings → Environment Variables:
+
+```
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+---
+
+## License
+
+MIT
