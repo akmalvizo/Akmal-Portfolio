@@ -5,11 +5,12 @@ import {
   MapPin, Calendar, ChevronDown, ChevronUp, CheckCircle2,
 } from "lucide-react"
 import { experience } from "../../data/experience"
+import AccordionSection from "../common/AccordionSection"
 
 /* ── Icon map ────────────────────────────────────────────────── */
 const ICON_MAP = { GraduationCap, Brain, Presentation, Briefcase }
 
-/* ── Achievement badges above the grid ──────────────────────── */
+/* ── Achievement badges ──────────────────────────────────────── */
 const ACHIEVEMENTS = [
   "BS Computer Science Graduate",
   "AI Intern @ Decode Labs",
@@ -24,10 +25,10 @@ const containerV = {
 }
 const cardV = {
   hidden: { opacity: 0, y: 36 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25,0.46,0.45,0.94] } },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] } },
 }
 
-/* ── Tech skill chip ─────────────────────────────────────────── */
+/* ── Skill chip ──────────────────────────────────────────────── */
 function SkillChip({ label, accent }) {
   return (
     <span style={{
@@ -42,10 +43,7 @@ function SkillChip({ label, accent }) {
   )
 }
 
-
-/* ─────────────────────────────────────────────────────────────
-   EXPERIENCE CARD
-───────────────────────────────────────────────────────────── */
+/* ── Experience card ─────────────────────────────────────────── */
 function ExperienceCard({ exp }) {
   const [expanded, setExpanded] = useState(false)
   const [hovered,  setHovered]  = useState(false)
@@ -85,7 +83,7 @@ function ExperienceCard({ exp }) {
         transition: "opacity 0.3s",
       }} aria-hidden="true" />
 
-      {/* Corner ambient glow */}
+      {/* Corner glow */}
       <div style={{
         position: "absolute", top: "-24px", right: "-24px",
         width: "90px", height: "90px", borderRadius: "50%",
@@ -95,12 +93,10 @@ function ExperienceCard({ exp }) {
         pointerEvents: "none",
       }} aria-hidden="true" />
 
-      {/* ── Card body ───────────────────────────────────────── */}
       <div style={{ padding: "24px 24px 20px", display: "flex", flexDirection: "column", gap: "16px", flex: 1 }}>
 
-        {/* Header row: icon + type badge */}
+        {/* Header: icon + duration badge */}
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
-          {/* Icon */}
           <div style={{
             width: "46px", height: "46px", borderRadius: "13px", flexShrink: 0,
             display: "flex", alignItems: "center", justifyContent: "center",
@@ -117,7 +113,6 @@ function ExperienceCard({ exp }) {
             </motion.div>
           </div>
 
-          {/* Duration badge */}
           <span style={{
             fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em",
             color: accent, background: `${accent}10`,
@@ -130,7 +125,7 @@ function ExperienceCard({ exp }) {
           </span>
         </div>
 
-        {/* Title + organization */}
+        {/* Title + org + location */}
         <div>
           <h3 style={{
             fontSize: "15px", fontWeight: 700, color: "#EEF0F8",
@@ -138,9 +133,7 @@ function ExperienceCard({ exp }) {
           }}>
             {exp.title}
           </h3>
-          <p style={{
-            fontSize: "13px", fontWeight: 600, color: accent, marginBottom: "4px",
-          }}>
+          <p style={{ fontSize: "13px", fontWeight: 600, color: accent, marginBottom: "4px" }}>
             {exp.organization}
           </p>
           <p style={{
@@ -157,7 +150,7 @@ function ExperienceCard({ exp }) {
           {exp.summary}
         </p>
 
-        {/* Skills row */}
+        {/* Skills */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
           {exp.skills.map(s => (
             <SkillChip key={s} label={s} accent={accent} />
@@ -170,7 +163,7 @@ function ExperienceCard({ exp }) {
           background: `linear-gradient(to right,${accent}25,transparent)`,
         }} aria-hidden="true" />
 
-        {/* ── Expandable details ───────────────────────────── */}
+        {/* Expandable details */}
         <AnimatePresence initial={false}>
           {expanded && (
             <motion.div
@@ -178,13 +171,10 @@ function ExperienceCard({ exp }) {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.32, ease: [0.25,0.46,0.45,0.94] }}
+              transition={{ duration: 0.32, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{ overflow: "hidden" }}
             >
-              <ul style={{
-                display: "flex", flexDirection: "column", gap: "8px",
-                paddingBottom: "4px",
-              }}>
+              <ul style={{ display: "flex", flexDirection: "column", gap: "8px", paddingBottom: "4px" }}>
                 {exp.details.map((d, i) => (
                   <motion.li
                     key={i}
@@ -209,7 +199,7 @@ function ExperienceCard({ exp }) {
           )}
         </AnimatePresence>
 
-        {/* View More / Less button */}
+        {/* View More / Less toggle */}
         <button
           onClick={() => setExpanded(v => !v)}
           aria-expanded={expanded}
@@ -241,147 +231,123 @@ function ExperienceCard({ exp }) {
   )
 }
 
+/* ── Section header (always visible) ────────────────────────── */
+function ExperienceHeader() {
+  return (
+    <div style={{ textAlign: "center", marginBottom: "32px" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+        <span style={{
+          display: "inline-flex", alignItems: "center", gap: "8px",
+          padding: "6px 18px", borderRadius: "999px",
+          fontSize: "11px", fontWeight: 700,
+          letterSpacing: "0.14em", textTransform: "uppercase",
+          background: "linear-gradient(135deg,rgba(0,229,204,0.12),rgba(167,139,250,0.12))",
+          border: "1px solid rgba(0,229,204,0.22)", color: "#00E5CC",
+        }}>
+          <span style={{
+            width: "6px", height: "6px", borderRadius: "50%",
+            background: "linear-gradient(135deg,#00E5CC,#A78BFA)",
+            display: "inline-block", boxShadow: "0 0 6px rgba(0,229,204,0.6)",
+          }} aria-hidden="true" />
+          Professional Journey
+        </span>
+      </div>
 
-/* ─────────────────────────────────────────────────────────────
-   MAIN SECTION
-───────────────────────────────────────────────────────────── */
+      <h2 style={{
+        fontSize: "clamp(2.2rem,5vw,3.2rem)", fontWeight: 800,
+        letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "18px",
+        background: "linear-gradient(135deg,#FFFFFF 20%,#94A3B8 100%)",
+        WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+        backgroundClip: "text",
+      }}>
+        Experience &amp; Growth
+      </h2>
+
+      <p style={{
+        fontSize: "15px", color: "#718096",
+        maxWidth: "520px", margin: "0 auto",
+        lineHeight: 1.7,
+      }}>
+        My journey of learning, building, leading, and applying AI to solve real-world problems.
+      </p>
+    </div>
+  )
+}
+
+/* ── Main section ────────────────────────────────────────────── */
 export default function Experience() {
   const reduced = useReducedMotion()
 
   return (
-    <section
+    <AccordionSection
       id="experience"
-      style={{
-        background: "#0A0F1E",
-        paddingTop: "100px",
-        paddingBottom: "100px",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      background="#0A0F1E"
+      sectionHeader={<ExperienceHeader />}
+      extraStyle={{ overflow: "hidden" }}
     >
-      {/* Dot grid */}
+      {/* Background decorations */}
       <div style={{
-        position:"absolute", inset:0, pointerEvents:"none",
-        backgroundImage:"radial-gradient(rgba(0,229,204,0.028) 1px,transparent 1px)",
-        backgroundSize:"40px 40px",
-      }} aria-hidden="true" />
-      {/* Glow blobs */}
-      <div style={{
-        position:"absolute", top:"-8%", left:"8%",
-        width:"36%", height:"44%", borderRadius:"50%", pointerEvents:"none",
-        background:"radial-gradient(ellipse,rgba(0,229,204,0.04) 0%,transparent 70%)",
+        position: "absolute", inset: 0, pointerEvents: "none",
+        backgroundImage: "radial-gradient(rgba(0,229,204,0.028) 1px,transparent 1px)",
+        backgroundSize: "40px 40px",
       }} aria-hidden="true" />
       <div style={{
-        position:"absolute", bottom:"-8%", right:"8%",
-        width:"32%", height:"38%", borderRadius:"50%", pointerEvents:"none",
-        background:"radial-gradient(ellipse,rgba(167,139,250,0.04) 0%,transparent 70%)",
+        position: "absolute", top: "-8%", left: "8%",
+        width: "36%", height: "44%", borderRadius: "50%", pointerEvents: "none",
+        background: "radial-gradient(ellipse,rgba(0,229,204,0.04) 0%,transparent 70%)",
+      }} aria-hidden="true" />
+      <div style={{
+        position: "absolute", bottom: "-8%", right: "8%",
+        width: "32%", height: "38%", borderRadius: "50%", pointerEvents: "none",
+        background: "radial-gradient(ellipse,rgba(167,139,250,0.04) 0%,transparent 70%)",
       }} aria-hidden="true" />
 
-      <div style={{
-        maxWidth:"1200px", margin:"0 auto",
-        padding:"0 clamp(1.5rem,5vw,4rem)",
-        position:"relative", zIndex:1,
-      }}>
-
-        {/* ── Section header ────────────────────────────────── */}
-        <motion.div
-          initial={reduced ? {} : { opacity:0, y:28 }}
-          whileInView={{ opacity:1, y:0 }}
-          viewport={{ once:true, amount:0.3 }}
-          transition={{ duration:0.52, ease:[0.25,0.46,0.45,0.94] }}
-          style={{ textAlign:"center", marginBottom:"48px" }}
-        >
-          {/* Badge */}
-          <div style={{ display:"flex", justifyContent:"center", marginBottom:"20px" }}>
-            <span style={{
-              display:"inline-flex", alignItems:"center", gap:"8px",
-              padding:"6px 18px", borderRadius:"999px",
-              fontSize:"11px", fontWeight:700,
-              letterSpacing:"0.14em", textTransform:"uppercase",
-              background:"linear-gradient(135deg,rgba(0,229,204,0.12),rgba(167,139,250,0.12))",
-              border:"1px solid rgba(0,229,204,0.22)", color:"#00E5CC",
-            }}>
-              <span style={{
-                width:"6px", height:"6px", borderRadius:"50%",
-                background:"linear-gradient(135deg,#00E5CC,#A78BFA)",
-                display:"inline-block", boxShadow:"0 0 6px rgba(0,229,204,0.6)",
-              }} aria-hidden="true" />
-              Professional Journey
-            </span>
-          </div>
-
-          <h2 style={{
-            fontSize:"clamp(2.2rem,5vw,3.2rem)", fontWeight:800,
-            letterSpacing:"-0.03em", lineHeight:1.1, marginBottom:"18px",
-            background:"linear-gradient(135deg,#FFFFFF 20%,#94A3B8 100%)",
-            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
-            backgroundClip:"text",
+      {/* Achievement badges */}
+      <motion.div
+        initial={reduced ? {} : { opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.5, delay: 0.05 }}
+        style={{
+          display: "flex", flexWrap: "wrap",
+          justifyContent: "center", gap: "10px",
+          marginBottom: "40px",
+        }}
+      >
+        {ACHIEVEMENTS.map((a) => (
+          <span key={a} style={{
+            display: "inline-flex", alignItems: "center", gap: "7px",
+            padding: "7px 16px", borderRadius: "999px",
+            fontSize: "12px", fontWeight: 600,
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.09)",
+            color: "#A0AEC0",
           }}>
-            Experience &amp; Growth
-          </h2>
+            <CheckCircle2 size={12} style={{ color: "#00E5CC", flexShrink: 0 }} aria-hidden="true" />
+            {a}
+          </span>
+        ))}
+      </motion.div>
 
-          <p style={{
-            fontSize:"15px", color:"#718096",
-            maxWidth:"520px", margin:"0 auto 28px", lineHeight:1.7,
-          }}>
-            My journey of learning, building, leading, and applying AI to solve real-world problems.
-          </p>
+      {/* Experience cards grid */}
+      <motion.div
+        variants={reduced ? {} : containerV}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.05 }}
+        style={{ display: "grid", gridTemplateColumns: "repeat(1,1fr)", gap: "20px" }}
+        className="exp-grid"
+      >
+        <style>{`
+          @media(min-width:640px){
+            .exp-grid { grid-template-columns: repeat(2,1fr) !important; }
+          }
+        `}</style>
 
-          <div style={{
-            width:"120px", height:"3px", borderRadius:"2px",
-            background:"linear-gradient(to right,#00E5CC,#A78BFA,transparent)",
-            margin:"0 auto", boxShadow:"0 0 12px rgba(0,229,204,0.4)",
-          }} aria-hidden="true" />
-        </motion.div>
-
-        {/* ── Achievement badges ────────────────────────────── */}
-        <motion.div
-          initial={reduced ? {} : { opacity:0, y:20 }}
-          whileInView={{ opacity:1, y:0 }}
-          viewport={{ once:true, amount:0.3 }}
-          transition={{ duration:0.5, delay:0.1 }}
-          style={{
-            display:"flex", flexWrap:"wrap",
-            justifyContent:"center", gap:"10px",
-            marginBottom:"48px",
-          }}
-        >
-          {ACHIEVEMENTS.map((a) => (
-            <span key={a} style={{
-              display:"inline-flex", alignItems:"center", gap:"7px",
-              padding:"7px 16px", borderRadius:"999px",
-              fontSize:"12px", fontWeight:600,
-              background:"rgba(255,255,255,0.04)",
-              border:"1px solid rgba(255,255,255,0.09)",
-              color:"#A0AEC0",
-            }}>
-              <CheckCircle2 size={12} style={{ color:"#00E5CC", flexShrink:0 }} aria-hidden="true" />
-              {a}
-            </span>
-          ))}
-        </motion.div>
-
-        {/* ── 2×2 experience grid ───────────────────────────── */}
-        <motion.div
-          variants={reduced ? {} : containerV}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once:true, amount:0.05 }}
-          style={{ display:"grid", gridTemplateColumns:"repeat(1,1fr)", gap:"20px" }}
-          className="exp-grid"
-        >
-          <style>{`
-            @media(min-width:640px){
-              .exp-grid { grid-template-columns: repeat(2,1fr) !important; }
-            }
-          `}</style>
-
-          {experience.map((exp) => (
-            <ExperienceCard key={exp.id} exp={exp} />
-          ))}
-        </motion.div>
-
-      </div>
-    </section>
+        {experience.map((exp) => (
+          <ExperienceCard key={exp.id} exp={exp} />
+        ))}
+      </motion.div>
+    </AccordionSection>
   )
 }

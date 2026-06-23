@@ -351,6 +351,7 @@ export default function Hero() {
                   initial={reduced ? {} : { opacity: 0, x: -20, y: -10 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ delay: 1.1, duration: 0.5 }}
+                  className="hero-label-ml"
                   style={{
                     position: "absolute", top: "14%", left: "-18%",
                     padding: "0.4rem 0.75rem", borderRadius: "10px",
@@ -364,11 +365,12 @@ export default function Hero() {
                   🤖 Junior ML Engineer
                 </motion.div>
 
-                {/* Floating label — CS Student */}
+                {/* Floating label — CS Graduated */}
                 <motion.div
                   initial={reduced ? {} : { opacity: 0, x: 20, y: 10 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ delay: 1.3, duration: 0.5 }}
+                  className="hero-label-cs"
                   style={{
                     position: "absolute", bottom: "14%", right: "-16%",
                     padding: "0.4rem 0.75rem", borderRadius: "10px",
@@ -437,6 +439,19 @@ export default function Hero() {
           .hero-grid { grid-template-columns: 1fr 1fr !important; }
           .lg-order-1 { order: 1 !important; }
           .lg-order-2 { order: 2 !important; }
+        }
+        /* ── Mobile: move labels so they don't overlap the face ── */
+        @media (max-width: 1023px) {
+          .hero-label-ml {
+            top: -10% !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+          }
+          .hero-label-cs {
+            bottom: -10% !important;
+            right: 50% !important;
+            transform: translateX(50%) !important;
+          }
         }
       `}</style>
     </section>

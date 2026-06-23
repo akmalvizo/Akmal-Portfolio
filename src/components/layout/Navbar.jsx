@@ -286,9 +286,15 @@ export default function Navbar() {
   }, [])
 
   const scrollTo = useCallback((id) => {
-    const el = document.getElementById(id)
-    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 72, behavior: "smooth" })
     setMenuOpen(false)
+    // Small delay lets the mobile drawer close and layout settle
+    // before we calculate the element's position
+    setTimeout(() => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const top = el.getBoundingClientRect().top + window.scrollY - 72
+      window.scrollTo({ top, behavior: "smooth" })
+    }, 80)
   }, [])
 
   return (

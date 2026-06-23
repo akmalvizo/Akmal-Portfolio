@@ -4,6 +4,7 @@ import { ExternalLink, ArrowUpRight } from "lucide-react"
 import { FaGithub } from "react-icons/fa"
 import { projects } from "../../data/projects"
 import { personalInfo } from "../../data/about"
+import AccordionSection from "../common/AccordionSection"
 
 /* ── Stagger variants ────────────────────────────────────────── */
 const containerV = {
@@ -31,24 +32,17 @@ function Chip({ label, accent, hovered }) {
   )
 }
 
-
-/* ════════════════════════════════════════════════════════════
-   UNIQUE AI VISUAL PREVIEWS — one per project
-════════════════════════════════════════════════════════════ */
-
 /* ── P1: Audio waveform + emotion nodes ─────────────────────── */
 function WaveformVisual({ hovered, reduced }) {
-  const bars   = [4,7,12,9,14,8,11,6,13,10,7,15,9,12,6,10,8,13,7,11]
+  const bars = [4,7,12,9,14,8,11,6,13,10,7,15,9,12,6,10,8,13,7,11]
   return (
     <div style={{ width:"100%", height:"100%", position:"relative",
                   display:"flex", alignItems:"center", justifyContent:"center",
                   background:"linear-gradient(135deg,rgba(0,229,204,0.06),rgba(2,132,199,0.08))",
                   overflow:"hidden" }}>
-      {/* Glow orb */}
       <div style={{ position:"absolute", width:120, height:120, borderRadius:"50%",
                     background:"radial-gradient(circle,rgba(0,229,204,0.18),transparent 70%)",
                     top:"10%", left:"20%", filter:"blur(18px)" }} aria-hidden="true"/>
-      {/* Waveform bars */}
       <div style={{ display:"flex", alignItems:"center", gap:3, zIndex:1 }}>
         {bars.map((h,i) => (
           <motion.div key={i}
@@ -56,12 +50,10 @@ function WaveformVisual({ hovered, reduced }) {
                      background:`rgba(0,229,204,${0.3+i%3*0.2})`,
                      boxShadow: hovered ? "0 0 6px rgba(0,229,204,0.6)" : "none" }}
             animate={!reduced ? { height:[h*3, h*3*1.6, h*3] } : { height: h*3 }}
-            transition={{ duration:0.9+i*0.04, repeat:Infinity, ease:"easeInOut",
-                          delay: i*0.06 }}
+            transition={{ duration:0.9+i*0.04, repeat:Infinity, ease:"easeInOut", delay: i*0.06 }}
           />
         ))}
       </div>
-      {/* Emotion labels */}
       {["😊","😢","😠","😐"].map((e,i) => (
         <motion.span key={e}
           style={{ position:"absolute", fontSize:16, userSelect:"none",
@@ -71,7 +63,6 @@ function WaveformVisual({ hovered, reduced }) {
           transition={{ duration:2+i*0.4, repeat:Infinity, ease:"easeInOut", delay:i*0.3 }}
         >{e}</motion.span>
       ))}
-      {/* Corner label */}
       <span style={{ position:"absolute", bottom:10, left:12,
                      fontSize:10, fontWeight:700, letterSpacing:"0.1em",
                      textTransform:"uppercase", color:"rgba(0,229,204,0.6)" }}>
@@ -96,7 +87,6 @@ function RecommendationVisual({ hovered, reduced }) {
       <div style={{ position:"absolute", width:110, height:110, borderRadius:"50%",
                     background:"radial-gradient(circle,rgba(167,139,250,0.18),transparent 70%)",
                     top:"50%",left:"50%", transform:"translate(-50%,-50%)", filter:"blur(16px)" }} aria-hidden="true"/>
-      {/* Central AI node */}
       <div style={{ position:"absolute", top:"50%", left:"50%",
                     transform:"translate(-50%,-50%)", width:40, height:40,
                     borderRadius:"50%", zIndex:2,
@@ -107,19 +97,14 @@ function RecommendationVisual({ hovered, reduced }) {
                     fontSize:16, transition:"box-shadow 0.3s" }}>
         🎬
       </div>
-      {/* SVG connection lines */}
       <svg style={{ position:"absolute", inset:0, width:"100%", height:"100%", zIndex:1 }}
         aria-hidden="true">
         {cards.map((c,i) => (
-          <line key={i}
-            x1="50%" y1="50%"
-            x2={c.x} y2={c.y}
+          <line key={i} x1="50%" y1="50%" x2={c.x} y2={c.y}
             stroke={`rgba(167,139,250,${hovered?0.35:0.15})`}
-            strokeWidth="1.5" strokeDasharray="4 3"
-          />
+            strokeWidth="1.5" strokeDasharray="4 3" />
         ))}
       </svg>
-      {/* Movie genre cards */}
       {cards.map((c,i)=>(
         <motion.div key={c.t}
           style={{ position:"absolute", left:c.x, top:c.y,
@@ -141,7 +126,6 @@ function RecommendationVisual({ hovered, reduced }) {
   )
 }
 
-
 /* ── P3: Chat bubble interface ───────────────────────────────── */
 function ChatVisual({ hovered, reduced }) {
   const msgs = [
@@ -158,7 +142,6 @@ function ChatVisual({ hovered, reduced }) {
       <div style={{ position:"absolute",width:100,height:100,borderRadius:"50%",
                     background:"radial-gradient(circle,rgba(56,189,248,0.15),transparent 70%)",
                     bottom:"-10%",right:"-5%",filter:"blur(14px)" }} aria-hidden="true"/>
-      {/* Bot avatar */}
       <div style={{ position:"absolute",top:10,right:14,
                     width:28,height:28,borderRadius:"50%",
                     background:"linear-gradient(135deg,#38BDF8,#3B82F6)",
@@ -174,12 +157,9 @@ function ChatVisual({ hovered, reduced }) {
           style={{
             alignSelf: m.bot?"flex-start":"flex-end",
             maxWidth:"78%", padding:"6px 11px", borderRadius: m.bot?"4px 12px 12px 12px":"12px 4px 12px 12px",
-            background: m.bot
-              ? "rgba(56,189,248,0.12)"
-              : "rgba(255,255,255,0.07)",
+            background: m.bot ? "rgba(56,189,248,0.12)" : "rgba(255,255,255,0.07)",
             border: `1px solid ${m.bot?"rgba(56,189,248,0.28)":"rgba(255,255,255,0.1)"}`,
-            fontSize:11, color: m.bot?"#38BDF8":"#CBD5E0", fontWeight:500,
-            lineHeight:1.4,
+            fontSize:11, color: m.bot?"#38BDF8":"#CBD5E0", fontWeight:500, lineHeight:1.4,
           }}>
           {m.text}
         </motion.div>
@@ -209,7 +189,6 @@ function TechGraphVisual({ hovered, reduced }) {
       <div style={{ position:"absolute",width:90,height:90,borderRadius:"50%",
                     background:"radial-gradient(circle,rgba(52,211,153,0.18),transparent 70%)",
                     top:"30%",left:"35%",filter:"blur(14px)" }} aria-hidden="true"/>
-      {/* Central node */}
       <div style={{ position:"absolute",top:"50%",left:"50%",
                     transform:"translate(-50%,-50%)",
                     width:44,height:44,borderRadius:"50%",zIndex:2,
@@ -218,7 +197,6 @@ function TechGraphVisual({ hovered, reduced }) {
                     boxShadow: hovered?"0 0 20px rgba(52,211,153,0.45)":"0 0 8px rgba(52,211,153,0.2)",
                     display:"flex",alignItems:"center",justifyContent:"center",
                     fontSize:18, transition:"box-shadow 0.3s" }}>⚙️</div>
-      {/* Connection lines */}
       <svg style={{ position:"absolute",inset:0,width:"100%",height:"100%",zIndex:1 }}
         aria-hidden="true">
         {nodes.map((n,i)=>(
@@ -227,7 +205,6 @@ function TechGraphVisual({ hovered, reduced }) {
             strokeWidth="1.2" strokeDasharray="3 3"/>
         ))}
       </svg>
-      {/* Tech nodes */}
       {nodes.map((n,i)=>(
         <motion.div key={n.label}
           style={{ position:"absolute",left:n.x,top:n.y,
@@ -249,7 +226,6 @@ function TechGraphVisual({ hovered, reduced }) {
   )
 }
 
-/* Map project id → visual component */
 const VISUALS = {
   1: WaveformVisual,
   2: RecommendationVisual,
@@ -257,11 +233,8 @@ const VISUALS = {
   4: TechGraphVisual,
 }
 
-
-/* ─────────────────────────────────────────────────────────────
-   PROJECT CARD
-───────────────────────────────────────────────────────────── */
-function ProjectCard({ project, index }) {
+/* ── Project Card ────────────────────────────────────────────── */
+function ProjectCard({ project }) {
   const [hovered, setHovered] = useState(false)
   const reduced = useReducedMotion()
   const Visual  = VISUALS[project.id] || WaveformVisual
@@ -289,10 +262,8 @@ function ProjectCard({ project, index }) {
         transition: "border-color 0.3s ease, box-shadow 0.3s ease",
       }}
     >
-      {/* ── Visual preview area ────────────────────────────── */}
       <div style={{ height: "180px", flexShrink: 0, position: "relative" }}>
         <Visual hovered={hovered} reduced={!!reduced} />
-        {/* Project number badge */}
         <div style={{ position:"absolute", top:12, left:14, zIndex:10 }}>
           <span style={{
             fontSize:"10px", fontWeight:800, letterSpacing:"0.1em",
@@ -305,7 +276,6 @@ function ProjectCard({ project, index }) {
             PROJECT {String(project.id).padStart(2,"0")}
           </span>
         </div>
-        {/* Top accent bar */}
         <div style={{
           position:"absolute", top:0, left:"10%", right:"10%",
           height:"2px", borderRadius:"0 0 2px 2px",
@@ -315,12 +285,10 @@ function ProjectCard({ project, index }) {
         }} aria-hidden="true" />
       </div>
 
-      {/* ── Card body ─────────────────────────────────────── */}
       <div style={{
         padding: "20px 22px 22px",
         display: "flex", flexDirection: "column", gap: "12px", flex: 1,
       }}>
-        {/* Category */}
         <p style={{
           fontSize:"10px", fontWeight:700, letterSpacing:"0.1em",
           textTransform:"uppercase", color: accent, opacity:0.85,
@@ -328,7 +296,6 @@ function ProjectCard({ project, index }) {
           {project.category}
         </p>
 
-        {/* Title */}
         <h3 style={{
           fontSize:"15px", fontWeight:700, color:"#EEF0F8",
           lineHeight:1.25, letterSpacing:"-0.01em",
@@ -336,27 +303,21 @@ function ProjectCard({ project, index }) {
           {project.title}
         </h3>
 
-        {/* Description */}
-        <p style={{
-          fontSize:"13px", color:"#718096", lineHeight:1.65, flex:1,
-        }}>
+        <p style={{ fontSize:"13px", color:"#718096", lineHeight:1.65, flex:1 }}>
           {project.description}
         </p>
 
-        {/* Tech chips */}
         <div style={{ display:"flex", flexWrap:"wrap", gap:"6px" }}>
           {project.tech.map(t => (
             <Chip key={t} label={t} accent={accent} hovered={hovered} />
           ))}
         </div>
 
-        {/* Divider */}
         <div style={{
           height:"1px",
           background:`linear-gradient(to right,${accent}25,transparent)`,
         }} aria-hidden="true" />
 
-        {/* Action buttons */}
         <div style={{ display:"flex", alignItems:"center", gap:"10px" }}>
           <a
             href={project.githubUrl}
@@ -414,15 +375,13 @@ function ProjectCard({ project, index }) {
             </a>
           )}
 
-          {/* Arrow icon — right edge */}
           <motion.div
             style={{ marginLeft:"auto" }}
             animate={hovered && !reduced ? { x:[0,4,0] } : {}}
             transition={{ duration:0.6, repeat:Infinity }}
           >
             <ArrowUpRight size={16}
-              style={{ color: hovered ? accent : "#4A5568",
-                       transition:"color 0.25s" }}
+              style={{ color: hovered ? accent : "#4A5568", transition:"color 0.25s" }}
               aria-hidden="true" />
           </motion.div>
         </div>
@@ -431,32 +390,65 @@ function ProjectCard({ project, index }) {
   )
 }
 
+/* ── Section header ─────────────────────────────────────────── */
+function ProjectsHeader() {
+  return (
+    <div style={{ textAlign:"center", marginBottom: "32px" }}>
+      <div style={{ display:"flex", justifyContent:"center", marginBottom:"20px" }}>
+        <span style={{
+          display:"inline-flex", alignItems:"center", gap:"8px",
+          padding:"6px 18px", borderRadius:"999px",
+          fontSize:"11px", fontWeight:700,
+          letterSpacing:"0.14em", textTransform:"uppercase",
+          background:"linear-gradient(135deg,rgba(0,229,204,0.12),rgba(167,139,250,0.12))",
+          border:"1px solid rgba(0,229,204,0.22)", color:"#00E5CC",
+        }}>
+          <span style={{
+            width:"6px", height:"6px", borderRadius:"50%",
+            background:"linear-gradient(135deg,#00E5CC,#A78BFA)",
+            display:"inline-block", boxShadow:"0 0 6px rgba(0,229,204,0.6)",
+          }} aria-hidden="true" />
+          Portfolio Highlights
+        </span>
+      </div>
 
-/* ─────────────────────────────────────────────────────────────
-   MAIN SECTION
-───────────────────────────────────────────────────────────── */
+      <h2 style={{
+        fontSize:"clamp(2.2rem,5vw,3.2rem)", fontWeight:800,
+        letterSpacing:"-0.03em", lineHeight:1.1, marginBottom:"18px",
+        background:"linear-gradient(135deg,#FFFFFF 20%,#94A3B8 100%)",
+        WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
+        backgroundClip:"text",
+      }}>
+        Featured Projects
+      </h2>
+
+      <p style={{
+        fontSize:"15px", color:"#718096",
+        maxWidth:"500px", margin:"0 auto", lineHeight:1.7,
+      }}>
+        A collection of AI and Machine Learning solutions built from research to deployment.
+      </p>
+    </div>
+  )
+}
+
+/* ── Main section ────────────────────────────────────────────── */
 export default function Projects() {
   const reduced = useReducedMotion()
 
   return (
-    <section
+    <AccordionSection
       id="projects"
-      style={{
-        background: "#0A0F1E",
-        paddingTop: "100px",
-        paddingBottom: "100px",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      background="#0A0F1E"
+      sectionHeader={<ProjectsHeader />}
+      extraStyle={{ overflow: "hidden" }}
     >
-      {/* ── Background dot grid ────────────────────────────── */}
+      {/* Background decorations */}
       <div style={{
         position:"absolute", inset:0, pointerEvents:"none",
         backgroundImage:"radial-gradient(rgba(0,229,204,0.028) 1px,transparent 1px)",
         backgroundSize:"40px 40px",
       }} aria-hidden="true" />
-
-      {/* ── Ambient glow blobs ─────────────────────────────── */}
       <div style={{
         position:"absolute", top:"-8%", right:"8%",
         width:"38%", height:"44%", borderRadius:"50%", pointerEvents:"none",
@@ -468,159 +460,97 @@ export default function Projects() {
         background:"radial-gradient(ellipse,rgba(167,139,250,0.04) 0%,transparent 70%)",
       }} aria-hidden="true" />
 
-      {/* ── Content ────────────────────────────────────────── */}
-      <div style={{
-        maxWidth:"1200px", margin:"0 auto",
-        padding:"0 clamp(1.5rem,5vw,4rem)",
-        position:"relative", zIndex:1,
-      }}>
+      {/* Cards grid */}
+      <motion.div
+        variants={reduced ? {} : containerV}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once:true, amount:0.05 }}
+        style={{ display:"grid", gridTemplateColumns:"repeat(1,1fr)", gap:"20px" }}
+        className="projects-grid"
+      >
+        <style>{`
+          @media(min-width:640px){
+            .projects-grid { grid-template-columns: repeat(2,1fr) !important; }
+          }
+        `}</style>
 
-        {/* ── Section header ─────────────────────────────── */}
-        <motion.div
-          initial={reduced ? {} : { opacity:0, y:28 }}
-          whileInView={{ opacity:1, y:0 }}
-          viewport={{ once:true, amount:0.3 }}
-          transition={{ duration:0.52, ease:[0.25,0.46,0.45,0.94] }}
-          style={{ textAlign:"center", marginBottom:"56px" }}
-        >
-          {/* Badge */}
-          <div style={{ display:"flex", justifyContent:"center", marginBottom:"20px" }}>
-            <span style={{
-              display:"inline-flex", alignItems:"center", gap:"8px",
-              padding:"6px 18px", borderRadius:"999px",
-              fontSize:"11px", fontWeight:700,
-              letterSpacing:"0.14em", textTransform:"uppercase",
-              background:"linear-gradient(135deg,rgba(0,229,204,0.12),rgba(167,139,250,0.12))",
-              border:"1px solid rgba(0,229,204,0.22)", color:"#00E5CC",
-            }}>
-              <span style={{
-                width:"6px", height:"6px", borderRadius:"50%",
-                background:"linear-gradient(135deg,#00E5CC,#A78BFA)",
-                display:"inline-block", boxShadow:"0 0 6px rgba(0,229,204,0.6)",
-              }} aria-hidden="true" />
-              Portfolio Highlights
-            </span>
-          </div>
+        {projects.map((p, i) => (
+          <ProjectCard key={p.id} project={p} index={i} />
+        ))}
+      </motion.div>
 
-          <h2 style={{
-            fontSize:"clamp(2.2rem,5vw,3.2rem)", fontWeight:800,
-            letterSpacing:"-0.03em", lineHeight:1.1, marginBottom:"18px",
-            background:"linear-gradient(135deg,#FFFFFF 20%,#94A3B8 100%)",
-            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
-            backgroundClip:"text",
-          }}>
-            Featured Projects
-          </h2>
+      {/* GitHub CTA */}
+      <motion.div
+        initial={reduced ? {} : { opacity:0, y:24 }}
+        whileInView={{ opacity:1, y:0 }}
+        viewport={{ once:true, amount:0.3 }}
+        transition={{ duration:0.52, delay:0.2 }}
+        style={{
+          marginTop:"56px",
+          padding:"44px 32px",
+          borderRadius:"24px",
+          textAlign:"center",
+          background:"linear-gradient(145deg,rgba(18,24,42,0.96),rgba(10,14,28,0.92))",
+          backdropFilter:"blur(16px)",
+          border:"1px solid rgba(255,255,255,0.07)",
+          boxShadow:"0 4px 32px rgba(0,0,0,0.3)",
+          position:"relative",
+          overflow:"hidden",
+        }}
+      >
+        <div style={{
+          position:"absolute", top:"-30%", right:"5%",
+          width:"300px", height:"300px", borderRadius:"50%", pointerEvents:"none",
+          background:"radial-gradient(circle,rgba(0,229,204,0.04) 0%,transparent 65%)",
+        }} aria-hidden="true" />
 
-          <p style={{
-            fontSize:"15px", color:"#718096",
-            maxWidth:"500px", margin:"0 auto 28px", lineHeight:1.7,
-          }}>
-            A collection of AI and Machine Learning solutions built from research to deployment.
-          </p>
+        <div style={{
+          width:"56px", height:"56px", borderRadius:"50%",
+          background:"rgba(255,255,255,0.05)",
+          border:"1px solid rgba(255,255,255,0.1)",
+          display:"flex", alignItems:"center", justifyContent:"center",
+          margin:"0 auto 20px",
+        }}>
+          <FaGithub size={26} style={{ color:"#A0AEC0" }} aria-hidden="true" />
+        </div>
 
-          <div style={{
-            width:"120px", height:"3px", borderRadius:"2px",
-            background:"linear-gradient(to right,#00E5CC,#A78BFA,transparent)",
-            margin:"0 auto", boxShadow:"0 0 12px rgba(0,229,204,0.4)",
-          }} aria-hidden="true" />
-        </motion.div>
+        <h3 style={{
+          fontSize:"22px", fontWeight:800,
+          letterSpacing:"-0.02em", marginBottom:"12px",
+          background:"linear-gradient(135deg,#FFFFFF 30%,#94A3B8 100%)",
+          WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
+          backgroundClip:"text",
+        }}>
+          Want to See More?
+        </h3>
 
-        {/* ── 2×2 project grid ───────────────────────────── */}
-        <motion.div
-          variants={reduced ? {} : containerV}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once:true, amount:0.05 }}
-          style={{ display:"grid", gridTemplateColumns:"repeat(1,1fr)", gap:"20px" }}
-          className="projects-grid"
-        >
-          <style>{`
-            @media(min-width:640px){
-              .projects-grid { grid-template-columns: repeat(2,1fr) !important; }
-            }
-          `}</style>
-
-          {projects.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} />
-          ))}
-        </motion.div>
-
-        {/* ── GitHub CTA ─────────────────────────────────── */}
-        <motion.div
-          initial={reduced ? {} : { opacity:0, y:24 }}
-          whileInView={{ opacity:1, y:0 }}
-          viewport={{ once:true, amount:0.3 }}
-          transition={{ duration:0.52, delay:0.2 }}
+        <a
+          href={personalInfo.github}
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
-            marginTop:"56px",
-            padding:"44px 32px",
-            borderRadius:"24px",
-            textAlign:"center",
-            background:"linear-gradient(145deg,rgba(18,24,42,0.96),rgba(10,14,28,0.92))",
-            backdropFilter:"blur(16px)",
-            border:"1px solid rgba(255,255,255,0.07)",
-            boxShadow:"0 4px 32px rgba(0,0,0,0.3)",
-            position:"relative",
-            overflow:"hidden",
+            display:"inline-flex", alignItems:"center", gap:"8px",
+            padding:"13px 32px", borderRadius:"12px",
+            background:"linear-gradient(135deg,#00E5CC 0%,#A78BFA 100%)",
+            color:"#040E18", fontWeight:700, fontSize:"14px",
+            textDecoration:"none", letterSpacing:"0.01em",
+            boxShadow:"0 0 28px rgba(0,229,204,0.25)",
+            transition:"all 0.22s ease",
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.boxShadow = "0 0 44px rgba(0,229,204,0.45)"
+            e.currentTarget.style.transform = "translateY(-2px)"
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.boxShadow = "0 0 28px rgba(0,229,204,0.25)"
+            e.currentTarget.style.transform = "translateY(0)"
           }}
         >
-          {/* CTA bg glow */}
-          <div style={{
-            position:"absolute", top:"-30%", right:"5%",
-            width:"300px", height:"300px", borderRadius:"50%", pointerEvents:"none",
-            background:"radial-gradient(circle,rgba(0,229,204,0.04) 0%,transparent 65%)",
-          }} aria-hidden="true" />
-
-          {/* GitHub icon circle */}
-          <div style={{
-            width:"56px", height:"56px", borderRadius:"50%",
-            background:"rgba(255,255,255,0.05)",
-            border:"1px solid rgba(255,255,255,0.1)",
-            display:"flex", alignItems:"center", justifyContent:"center",
-            margin:"0 auto 20px",
-          }}>
-            <FaGithub size={26} style={{ color:"#A0AEC0" }} aria-hidden="true" />
-          </div>
-
-          <h3 style={{
-            fontSize:"22px", fontWeight:800,
-            letterSpacing:"-0.02em", marginBottom:"12px",
-            background:"linear-gradient(135deg,#FFFFFF 30%,#94A3B8 100%)",
-            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
-            backgroundClip:"text",
-          }}>
-            Want to See More?
-          </h3>
-
-          <a
-            href={personalInfo.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display:"inline-flex", alignItems:"center", gap:"8px",
-              padding:"13px 32px", borderRadius:"12px",
-              background:"linear-gradient(135deg,#00E5CC 0%,#A78BFA 100%)",
-              color:"#040E18", fontWeight:700, fontSize:"14px",
-              textDecoration:"none", letterSpacing:"0.01em",
-              boxShadow:"0 0 28px rgba(0,229,204,0.25)",
-              transition:"all 0.22s ease",
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.boxShadow = "0 0 44px rgba(0,229,204,0.45)"
-              e.currentTarget.style.transform = "translateY(-2px)"
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.boxShadow = "0 0 28px rgba(0,229,204,0.25)"
-              e.currentTarget.style.transform = "translateY(0)"
-            }}
-          >
-            <FaGithub size={16} aria-hidden="true" />
-            Explore All Projects
-          </a>
-        </motion.div>
-
-      </div>
-    </section>
+          <FaGithub size={16} aria-hidden="true" />
+          Explore All Projects
+        </a>
+      </motion.div>
+    </AccordionSection>
   )
 }

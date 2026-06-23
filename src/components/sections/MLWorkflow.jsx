@@ -5,6 +5,7 @@ import {
   CheckCircle2,
 } from "lucide-react"
 import { mlWorkflow } from "../../data/workflow"
+import AccordionSection from "../common/AccordionSection"
 
 /* ── Icon map ─────────────────────────────────────────────────── */
 const ICON_MAP = { Database, FilterX, Wrench, BrainCircuit, BarChart3, Rocket }
@@ -27,9 +28,7 @@ const cardV = {
   show:   { opacity: 1, y: 0, transition: { duration: 0.58, ease: [0.25, 0.46, 0.45, 0.94] } },
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Single workflow card
-───────────────────────────────────────────────────────────── */
+/* ── Single workflow card ────────────────────────────────────── */
 function WorkflowCard({ step }) {
   const [hovered, setHovered] = useState(false)
   const reduced = useReducedMotion()
@@ -50,7 +49,6 @@ function WorkflowCard({ step }) {
         gap: "16px",
         overflow: "hidden",
         cursor: "default",
-        /* Glassmorphism */
         background: "linear-gradient(145deg, rgba(18,24,42,0.95) 0%, rgba(10,14,28,0.90) 100%)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
@@ -63,49 +61,36 @@ function WorkflowCard({ step }) {
         height: "100%",
       }}
     >
-      {/* Top accent bar */}
-      <div
-        style={{
-          position: "absolute", top: 0, left: "12%", right: "12%",
-          height: "2px", borderRadius: "0 0 2px 2px",
-          background: step.gradient,
-          opacity: hovered ? 1 : 0.5,
-          transition: "opacity 0.3s ease",
-        }}
-        aria-hidden="true"
-      />
+      <div style={{
+        position: "absolute", top: 0, left: "12%", right: "12%",
+        height: "2px", borderRadius: "0 0 2px 2px",
+        background: step.gradient,
+        opacity: hovered ? 1 : 0.5,
+        transition: "opacity 0.3s ease",
+      }} aria-hidden="true" />
 
-      {/* Corner ambient glow */}
-      <div
-        style={{
-          position: "absolute", top: "-24px", right: "-24px",
-          width: "88px", height: "88px", borderRadius: "50%",
-          background: `radial-gradient(circle, ${step.glow} 0%, transparent 70%)`,
-          opacity: hovered ? 1 : 0.45,
-          transition: "opacity 0.35s ease",
-          pointerEvents: "none",
-        }}
-        aria-hidden="true"
-      />
+      <div style={{
+        position: "absolute", top: "-24px", right: "-24px",
+        width: "88px", height: "88px", borderRadius: "50%",
+        background: `radial-gradient(circle, ${step.glow} 0%, transparent 70%)`,
+        opacity: hovered ? 1 : 0.45,
+        transition: "opacity 0.35s ease",
+        pointerEvents: "none",
+      }} aria-hidden="true" />
 
-      {/* Step number + icon row */}
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
-        {/* Step number badge */}
-        <span
-          style={{
-            fontSize: "11px", fontWeight: 800,
-            letterSpacing: "0.08em",
-            color: step.color,
-            background: `${step.color}12`,
-            border: `1px solid ${step.color}28`,
-            padding: "3px 10px",
-            borderRadius: "999px",
-          }}
-        >
+        <span style={{
+          fontSize: "11px", fontWeight: 800,
+          letterSpacing: "0.08em",
+          color: step.color,
+          background: `${step.color}12`,
+          border: `1px solid ${step.color}28`,
+          padding: "3px 10px",
+          borderRadius: "999px",
+        }}>
           STEP {String(step.step).padStart(2, "0")}
         </span>
 
-        {/* Icon */}
         <motion.div
           animate={hovered && !reduced ? { rotate: [0, -8, 8, 0] } : {}}
           transition={{ duration: 0.4 }}
@@ -124,53 +109,36 @@ function WorkflowCard({ step }) {
         </motion.div>
       </div>
 
-      {/* Title */}
-      <h3
-        style={{
-          fontSize: "15px", fontWeight: 700,
-          color: "#FFFFFF", letterSpacing: "-0.01em",
-          lineHeight: 1.25,
-        }}
-      >
+      <h3 style={{
+        fontSize: "15px", fontWeight: 700,
+        color: "#FFFFFF", letterSpacing: "-0.01em",
+        lineHeight: 1.25,
+      }}>
         {step.title}
       </h3>
 
-      {/* Description */}
-      <p
-        style={{
-          fontSize: "13px", lineHeight: 1.65,
-          color: "#718096", flex: 1,
-        }}
-      >
+      <p style={{ fontSize: "13px", lineHeight: 1.65, color: "#718096", flex: 1 }}>
         {step.description}
       </p>
 
-      {/* Divider */}
-      <div
-        style={{
-          height: "1px",
-          background: `linear-gradient(to right, ${step.color}28, transparent)`,
-        }}
-        aria-hidden="true"
-      />
+      <div style={{
+        height: "1px",
+        background: `linear-gradient(to right, ${step.color}28, transparent)`,
+      }} aria-hidden="true" />
 
-      {/* Tool chips */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
         {step.tools.map((tool) => (
-          <span
-            key={tool}
-            style={{
-              padding: "3px 11px",
-              borderRadius: "999px",
-              fontSize: "11px", fontWeight: 500,
-              letterSpacing: "0.01em",
-              background: hovered ? `${step.color}18` : `${step.color}0C`,
-              border: `1px solid ${step.color}28`,
-              color: hovered ? step.color : `${step.color}BB`,
-              transition: "all 0.25s ease",
-              whiteSpace: "nowrap",
-            }}
-          >
+          <span key={tool} style={{
+            padding: "3px 11px",
+            borderRadius: "999px",
+            fontSize: "11px", fontWeight: 500,
+            letterSpacing: "0.01em",
+            background: hovered ? `${step.color}18` : `${step.color}0C`,
+            border: `1px solid ${step.color}28`,
+            color: hovered ? step.color : `${step.color}BB`,
+            transition: "all 0.25s ease",
+            whiteSpace: "nowrap",
+          }}>
             {tool}
           </span>
         ))}
@@ -179,30 +147,21 @@ function WorkflowCard({ step }) {
   )
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Animated pipeline connector line (desktop)
-───────────────────────────────────────────────────────────── */
+/* ── Pipeline connector ──────────────────────────────────────── */
 function PipelineConnector() {
   const reduced = useReducedMotion()
   return (
-    <div
-      style={{
-        position: "relative", height: "4px",
-        borderRadius: "2px", overflow: "hidden",
-        background: "rgba(255,255,255,0.05)",
-        flex: 1, margin: "0 -2px",
-      }}
-      aria-hidden="true"
-    >
-      {/* Static gradient base */}
-      <div
-        style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(to right, rgba(0,229,204,0.3), rgba(167,139,250,0.3), rgba(251,113,133,0.3))",
-          borderRadius: "2px",
-        }}
-      />
-      {/* Animated light sweep */}
+    <div style={{
+      position: "relative", height: "4px",
+      borderRadius: "2px", overflow: "hidden",
+      background: "rgba(255,255,255,0.05)",
+      flex: 1, margin: "0 -2px",
+    }} aria-hidden="true">
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "linear-gradient(to right, rgba(0,229,204,0.3), rgba(167,139,250,0.3), rgba(251,113,133,0.3))",
+        borderRadius: "2px",
+      }} />
       {!reduced && (
         <motion.div
           style={{
@@ -218,33 +177,73 @@ function PipelineConnector() {
   )
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Main section
-───────────────────────────────────────────────────────────── */
+/* ── Section header ─────────────────────────────────────────── */
+function WorkflowHeader() {
+  return (
+    <div style={{ textAlign: "center", marginBottom: "32px" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+        <span style={{
+          display: "inline-flex", alignItems: "center", gap: "8px",
+          padding: "6px 18px", borderRadius: "999px",
+          fontSize: "11px", fontWeight: 700,
+          letterSpacing: "0.14em", textTransform: "uppercase",
+          background: "linear-gradient(135deg, rgba(0,229,204,0.12), rgba(167,139,250,0.12))",
+          border: "1px solid rgba(0,229,204,0.22)",
+          color: "#00E5CC",
+        }}>
+          <span style={{
+            width: "6px", height: "6px", borderRadius: "50%",
+            background: "linear-gradient(135deg, #00E5CC, #A78BFA)",
+            display: "inline-block",
+            boxShadow: "0 0 6px rgba(0,229,204,0.6)",
+          }} aria-hidden="true" />
+          AI Development Process
+        </span>
+      </div>
+
+      <h2 style={{
+        fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
+        fontWeight: 800,
+        letterSpacing: "-0.03em",
+        lineHeight: 1.1,
+        marginBottom: "18px",
+        background: "linear-gradient(135deg, #FFFFFF 20%, #94A3B8 100%)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        backgroundClip: "text",
+      }}>
+        Workflow of Intelligent Products
+      </h2>
+
+      <p style={{
+        fontSize: "15px", color: "#718096",
+        maxWidth: "520px", margin: "0 auto",
+        lineHeight: 1.7,
+      }}>
+        I design, train, evaluate, and deploy AI solutions using a
+        production-focused machine learning workflow.
+      </p>
+    </div>
+  )
+}
+
+/* ── Main section ────────────────────────────────────────────── */
 export default function MLWorkflow() {
   const reduced = useReducedMotion()
 
   return (
-    <section
+    <AccordionSection
       id="workflow"
-      style={{
-        background: "#080C18",
-        paddingTop: "100px",
-        paddingBottom: "100px",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      background="#080C18"
+      sectionHeader={<WorkflowHeader />}
+      extraStyle={{ overflow: "hidden" }}
     >
-      {/* Background dot grid */}
-      <div
-        style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          backgroundImage: "radial-gradient(rgba(0,229,204,0.03) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-        aria-hidden="true"
-      />
-      {/* Ambient glow blobs */}
+      {/* Background decorations */}
+      <div style={{
+        position: "absolute", inset: 0, pointerEvents: "none",
+        backgroundImage: "radial-gradient(rgba(0,229,204,0.03) 1px, transparent 1px)",
+        backgroundSize: "40px 40px",
+      }} aria-hidden="true" />
       <div style={{
         position: "absolute", top: "-5%", right: "10%",
         width: "38%", height: "45%", borderRadius: "50%", pointerEvents: "none",
@@ -256,223 +255,113 @@ export default function MLWorkflow() {
         background: "radial-gradient(ellipse, rgba(167,139,250,0.04) 0%, transparent 70%)",
       }} aria-hidden="true" />
 
-      {/* ── Main content ──────────────────────────────────────── */}
-      <div
+      {/* Metrics row */}
+      <motion.div
+        initial={reduced ? {} : { opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
         style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          padding: "0 clamp(1.5rem, 5vw, 4rem)",
-          position: "relative",
-          zIndex: 1,
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: "12px",
+          marginBottom: "40px",
         }}
       >
-        {/* ── Section header ────────────────────────────────────── */}
-        <motion.div
-          initial={reduced ? {} : { opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{ textAlign: "center", marginBottom: "56px" }}
-        >
-          {/* Badge */}
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-            <span
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "8px",
-                padding: "6px 18px", borderRadius: "999px",
-                fontSize: "11px", fontWeight: 700,
-                letterSpacing: "0.14em", textTransform: "uppercase",
-                background: "linear-gradient(135deg, rgba(0,229,204,0.12), rgba(167,139,250,0.12))",
-                border: "1px solid rgba(0,229,204,0.22)",
-                color: "#00E5CC",
-              }}
-            >
-              <span
-                style={{
-                  width: "6px", height: "6px", borderRadius: "50%",
-                  background: "linear-gradient(135deg, #00E5CC, #A78BFA)",
-                  display: "inline-block",
-                  boxShadow: "0 0 6px rgba(0,229,204,0.6)",
-                }}
-                aria-hidden="true"
-              />
-              AI Development Process
-            </span>
+        {METRICS.map((m) => (
+          <span key={m} style={{
+            display: "inline-flex", alignItems: "center", gap: "7px",
+            padding: "8px 18px", borderRadius: "999px",
+            fontSize: "12px", fontWeight: 500,
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.09)",
+            color: "#A0AEC0",
+          }}>
+            <CheckCircle2 size={13} style={{ color: "#00E5CC", flexShrink: 0 }} aria-hidden="true" />
+            {m}
+          </span>
+        ))}
+      </motion.div>
+
+      {/* Workflow cards */}
+      <motion.div
+        variants={reduced ? {} : containerV}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.06 }}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(1, 1fr)",
+          gap: "16px",
+        }}
+        className="workflow-grid"
+      >
+        <style>{`
+          @media (min-width: 640px) {
+            .workflow-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          }
+          @media (min-width: 1024px) {
+            .workflow-grid { grid-template-columns: repeat(3, 1fr) !important; }
+          }
+        `}</style>
+
+        {mlWorkflow.map((step) => (
+          <WorkflowCard key={step.step} step={step} />
+        ))}
+      </motion.div>
+
+      {/* Animated pipeline connector (desktop only) */}
+      <motion.div
+        initial={reduced ? {} : { opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.8, duration: 0.6 }}
+        style={{
+          marginTop: "40px",
+          display: "none",
+          alignItems: "center",
+          gap: "0",
+        }}
+        className="pipeline-line"
+      >
+        <style>{`.pipeline-line { display: none !important; } @media(min-width:1024px){ .pipeline-line { display: flex !important; } }`}</style>
+
+        {mlWorkflow.map((step, i) => (
+          <div key={step.step}
+            style={{ display: "flex", alignItems: "center", flex: i < mlWorkflow.length - 1 ? "1" : "none" }}
+          >
+            <div style={{
+              width: "10px", height: "10px", borderRadius: "50%", flexShrink: 0,
+              background: step.gradient,
+              boxShadow: `0 0 10px ${step.glow}`,
+            }} aria-hidden="true" />
+            {i < mlWorkflow.length - 1 && <PipelineConnector />}
           </div>
+        ))}
+      </motion.div>
 
-          {/* Heading */}
-          <h2
-            style={{
-              fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              lineHeight: 1.1,
-              marginBottom: "18px",
-              background: "linear-gradient(135deg, #FFFFFF 20%, #94A3B8 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            Workflow of Intelligent Products
-          </h2>
-
-          {/* Subtitle */}
-          <p
-            style={{
-              fontSize: "15px", color: "#718096",
-              maxWidth: "520px", margin: "0 auto 28px",
-              lineHeight: 1.7,
-            }}
-          >
-            I design, train, evaluate, and deploy AI solutions using a
-            production-focused machine learning workflow.
-          </p>
-
-          {/* Gradient divider */}
-          <div
-            style={{
-              width: "120px", height: "3px", borderRadius: "2px",
-              background: "linear-gradient(to right, #00E5CC, #A78BFA, transparent)",
-              margin: "0 auto",
-              boxShadow: "0 0 12px rgba(0,229,204,0.4)",
-            }}
-            aria-hidden="true"
-          />
-        </motion.div>
-
-        {/* ── Recruiter metrics row ──────────────────────────────── */}
-        <motion.div
-          initial={reduced ? {} : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "12px",
-            marginBottom: "52px",
-          }}
-        >
-          {METRICS.map((m) => (
-            <span
-              key={m}
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "7px",
-                padding: "8px 18px", borderRadius: "999px",
-                fontSize: "12px", fontWeight: 500,
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.09)",
-                color: "#A0AEC0",
-              }}
-            >
-              <CheckCircle2 size={13} style={{ color: "#00E5CC", flexShrink: 0 }} aria-hidden="true" />
-              {m}
+      {/* Labels under pipeline dots */}
+      <div style={{ display: "none", marginTop: "10px" }}
+        className="pipeline-labels" aria-hidden="true">
+        <style>{`.pipeline-labels { display: none !important; } @media(min-width:1024px){ .pipeline-labels { display: grid !important; grid-template-columns: repeat(6, 1fr); } }`}</style>
+        {mlWorkflow.map((step) => {
+          const SHORT_LABELS = {
+            1: "Acquisition", 2: "Preprocessing", 3: "Feature",
+            4: "Model", 5: "Performance", 6: "Deployment",
+          }
+          return (
+            <span key={step.step} style={{
+              fontSize: "10px", fontWeight: 600, letterSpacing: "0.06em",
+              textTransform: "uppercase", color: step.color, opacity: 0.75,
+              textAlign: "center", padding: "0 4px",
+              overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+            }}>
+              {SHORT_LABELS[step.step]}
             </span>
-          ))}
-        </motion.div>
-
-        {/* ── Workflow cards — responsive grid ──────────────────── */}
-        <motion.div
-          variants={reduced ? {} : containerV}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.06 }}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(1, 1fr)",
-            gap: "16px",
-          }}
-          className="workflow-grid"
-        >
-          <style>{`
-            @media (min-width: 640px) {
-              .workflow-grid { grid-template-columns: repeat(2, 1fr) !important; }
-            }
-            @media (min-width: 1024px) {
-              .workflow-grid { grid-template-columns: repeat(3, 1fr) !important; }
-            }
-          `}</style>
-
-          {mlWorkflow.map((step) => (
-            <WorkflowCard key={step.step} step={step} />
-          ))}
-        </motion.div>
-
-        {/* ── Animated pipeline connector (desktop only) ────────── */}
-        <motion.div
-          initial={reduced ? {} : { opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          style={{
-            marginTop: "40px",
-            display: "none",
-            alignItems: "center",
-            gap: "0",
-          }}
-          className="pipeline-line"
-        >
-          <style>{`.pipeline-line { display: none !important; } @media(min-width:1024px){ .pipeline-line { display: flex !important; } }`}</style>
-
-          {/* Step dots with connector lines between */}
-          {mlWorkflow.map((step, i) => (
-            <div
-              key={step.step}
-              style={{ display: "flex", alignItems: "center", flex: i < mlWorkflow.length - 1 ? "1" : "none" }}
-            >
-              {/* Dot */}
-              <div
-                style={{
-                  width: "10px", height: "10px", borderRadius: "50%", flexShrink: 0,
-                  background: step.gradient,
-                  boxShadow: `0 0 10px ${step.glow}`,
-                }}
-                aria-hidden="true"
-              />
-              {/* Connector line */}
-              {i < mlWorkflow.length - 1 && <PipelineConnector />}
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Labels under the pipeline dots */}
-        <div
-          style={{ display: "none", marginTop: "10px" }}
-          className="pipeline-labels"
-          aria-hidden="true"
-        >
-          <style>{`.pipeline-labels { display: none !important; } @media(min-width:1024px){ .pipeline-labels { display: grid !important; grid-template-columns: repeat(6, 1fr); } }`}</style>
-          {mlWorkflow.map((step) => {
-            /* Use a reliable short label — never rely on splitting the title */
-            const SHORT_LABELS = {
-              1: "Acquisition",
-              2: "Preprocessing",
-              3: "Feature",
-              4: "Model",
-              5: "Performance",
-              6: "Deployment",
-            }
-            return (
-              <span
-                key={step.step}
-                style={{
-                  fontSize: "10px", fontWeight: 600, letterSpacing: "0.06em",
-                  textTransform: "uppercase", color: step.color, opacity: 0.75,
-                  textAlign: "center",
-                  padding: "0 4px",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {SHORT_LABELS[step.step]}
-              </span>
-            )
-          })}
-        </div>
+          )
+        })}
       </div>
-    </section>
+    </AccordionSection>
   )
 }

@@ -4,6 +4,7 @@ import {
   Brain, Network, Code2, Server, Monitor, Workflow,
 } from "lucide-react"
 import { skills } from "../../data/skills"
+import AccordionSection from "../common/AccordionSection"
 
 /* ── Icon map ────────────────────────────────────────────────── */
 const ICON_MAP = { Brain, Network, Code2, Server, Monitor, Workflow }
@@ -18,9 +19,7 @@ const cardV = {
   show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] } },
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Premium glassmorphism skill card
-───────────────────────────────────────────────────────────── */
+/* ── Skill card ──────────────────────────────────────────────── */
 function SkillCard({ category }) {
   const [hovered, setHovered] = useState(false)
   const reduced = useReducedMotion()
@@ -42,14 +41,11 @@ function SkillCard({ category }) {
         flexDirection: "column",
         gap: "20px",
         cursor: "default",
-        /* Glassmorphism base */
         background: "linear-gradient(145deg, rgba(22,28,45,0.92) 0%, rgba(12,16,32,0.88) 100%)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        /* Border: animated gradient on hover, subtle default */
         border: "1px solid",
         borderColor: hovered ? `${color}55` : "rgba(255,255,255,0.07)",
-        /* Shadow depth */
         boxShadow: hovered
           ? `0 20px 60px rgba(0,0,0,0.45), 0 0 0 1px ${color}30, 0 0 40px ${glowColor}`
           : "0 4px 24px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.04) inset",
@@ -57,7 +53,6 @@ function SkillCard({ category }) {
         overflow: "hidden",
       }}
     >
-      {/* ── Subtle top-edge accent line ────────────────────── */}
       <div
         style={{
           position: "absolute",
@@ -70,8 +65,6 @@ function SkillCard({ category }) {
         }}
         aria-hidden="true"
       />
-
-      {/* ── Corner glow (decorative) ────────────────────────── */}
       <div
         style={{
           position: "absolute",
@@ -86,9 +79,7 @@ function SkillCard({ category }) {
         aria-hidden="true"
       />
 
-      {/* ── Card header ────────────────────────────────────── */}
       <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-        {/* Icon container */}
         <div
           style={{
             width: "48px", height: "48px",
@@ -105,36 +96,30 @@ function SkillCard({ category }) {
         </div>
 
         <div>
-          <h3
-            style={{
-              fontSize: "15px",
-              fontWeight: 700,
-              color: "#FFFFFF",
-              letterSpacing: "-0.01em",
-              lineHeight: 1.2,
-              marginBottom: "3px",
-            }}
-          >
+          <h3 style={{
+            fontSize: "15px",
+            fontWeight: 700,
+            color: "#FFFFFF",
+            letterSpacing: "-0.01em",
+            lineHeight: 1.2,
+            marginBottom: "3px",
+          }}>
             {category.label}
           </h3>
-          {/* Skill count badge */}
-          <span
-            style={{
-              fontSize: "11px",
-              fontWeight: 500,
-              color: color,
-              background: `${color}12`,
-              border: `1px solid ${color}25`,
-              padding: "1px 8px",
-              borderRadius: "999px",
-            }}
-          >
+          <span style={{
+            fontSize: "11px",
+            fontWeight: 500,
+            color: color,
+            background: `${color}12`,
+            border: `1px solid ${color}25`,
+            padding: "1px 8px",
+            borderRadius: "999px",
+          }}>
             {category.items.length} skills
           </span>
         </div>
       </div>
 
-      {/* ── Divider ──────────────────────────────────────────── */}
       <div
         style={{
           height: "1px",
@@ -144,16 +129,13 @@ function SkillCard({ category }) {
         aria-hidden="true"
       />
 
-      {/* ── Skill chips ──────────────────────────────────────── */}
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "7px",
-          flex: 1,
-          alignContent: "flex-start",
-        }}
-      >
+      <div style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "7px",
+        flex: 1,
+        alignContent: "flex-start",
+      }}>
         {category.items.map((skill) => (
           <motion.span
             key={skill}
@@ -169,7 +151,6 @@ function SkillCard({ category }) {
               lineHeight: "1.4",
               cursor: "default",
               whiteSpace: "nowrap",
-              /* Glass chip — same for every card, only color differs */
               background: hovered
                 ? `linear-gradient(135deg, ${color}18 0%, ${color}08 100%)`
                 : `${color}0E`,
@@ -187,6 +168,57 @@ function SkillCard({ category }) {
   )
 }
 
+/* ── Section header ─────────────────────────────────────────── */
+function SkillsHeader() {
+  return (
+    <div style={{ textAlign: "center", marginBottom: "32px" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+        <span style={{
+          display: "inline-flex", alignItems: "center", gap: "8px",
+          padding: "6px 18px", borderRadius: "999px",
+          fontSize: "11px", fontWeight: 700,
+          letterSpacing: "0.14em", textTransform: "uppercase",
+          background: "linear-gradient(135deg, rgba(0,229,204,0.12), rgba(167,139,250,0.12))",
+          border: "1px solid rgba(0,229,204,0.22)",
+          color: "#00E5CC",
+        }}>
+          <span style={{
+            width: "6px", height: "6px", borderRadius: "50%",
+            background: "linear-gradient(135deg, #00E5CC, #A78BFA)",
+            display: "inline-block",
+            boxShadow: "0 0 6px rgba(0,229,204,0.6)",
+          }} aria-hidden="true" />
+          Technical Expertise
+        </span>
+      </div>
+
+      <h2 style={{
+        fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
+        fontWeight: 800,
+        letterSpacing: "-0.03em",
+        lineHeight: 1.1,
+        marginBottom: "18px",
+        background: "linear-gradient(135deg, #FFFFFF 20%, #94A3B8 100%)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        backgroundClip: "text",
+      }}>
+        Skills &amp; Technologies
+      </h2>
+
+      <p style={{
+        fontSize: "15px",
+        color: "#718096",
+        maxWidth: "480px",
+        margin: "0 auto",
+        lineHeight: 1.65,
+      }}>
+        Tools and technologies I use to build intelligent AI-powered solutions.
+      </p>
+    </div>
+  )
+}
+
 /* ─────────────────────────────────────────────────────────────
    Section — Skills & Technologies
 ───────────────────────────────────────────────────────────── */
@@ -195,26 +227,18 @@ export default function Skills() {
   const categories = Object.values(skills)
 
   return (
-    <section
+    <AccordionSection
       id="skills"
-      style={{
-        background: "#080C18",
-        paddingTop: "100px",
-        paddingBottom: "100px",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      background="#080C18"
+      sectionHeader={<SkillsHeader />}
+      extraStyle={{ overflow: "hidden" }}
     >
-      {/* ── Floating background particles (very subtle) ───────── */}
-      <div
-        style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          backgroundImage: "radial-gradient(rgba(0,229,204,0.035) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-        aria-hidden="true"
-      />
-      {/* Large ambient glows */}
+      {/* Background decorations */}
+      <div style={{
+        position: "absolute", inset: 0, pointerEvents: "none",
+        backgroundImage: "radial-gradient(rgba(0,229,204,0.035) 1px, transparent 1px)",
+        backgroundSize: "40px 40px",
+      }} aria-hidden="true" />
       <div style={{
         position: "absolute", top: "-10%", left: "5%",
         width: "40%", height: "50%", borderRadius: "50%", pointerEvents: "none",
@@ -226,121 +250,31 @@ export default function Skills() {
         background: "radial-gradient(ellipse, rgba(167,139,250,0.04) 0%, transparent 65%)",
       }} aria-hidden="true" />
 
-      {/* ── Content container ─────────────────────────────────── */}
-      <div
+      <motion.div
+        variants={reduced ? {} : containerV}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.05 }}
         style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          padding: "0 clamp(1.5rem, 5vw, 4rem)",
-          position: "relative",
-          zIndex: 1,
+          display: "grid",
+          gridTemplateColumns: "repeat(1, 1fr)",
+          gap: "20px",
         }}
+        className="skills-grid"
       >
-        {/* ── Premium section header ─────────────────────────── */}
-        <motion.div
-          initial={reduced ? {} : { opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{ textAlign: "center", marginBottom: "64px" }}
-        >
-          {/* Gradient badge */}
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-            <span
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "8px",
-                padding: "6px 18px", borderRadius: "999px",
-                fontSize: "11px", fontWeight: 700,
-                letterSpacing: "0.14em", textTransform: "uppercase",
-                background: "linear-gradient(135deg, rgba(0,229,204,0.12), rgba(167,139,250,0.12))",
-                border: "1px solid rgba(0,229,204,0.22)",
-                color: "#00E5CC",
-              }}
-            >
-              <span
-                style={{
-                  width: "6px", height: "6px", borderRadius: "50%",
-                  background: "linear-gradient(135deg, #00E5CC, #A78BFA)",
-                  display: "inline-block",
-                  boxShadow: "0 0 6px rgba(0,229,204,0.6)",
-                }}
-                aria-hidden="true"
-              />
-              Technical Expertise
-            </span>
-          </div>
+        <style>{`
+          @media (min-width: 640px) {
+            .skills-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          }
+          @media (min-width: 1024px) {
+            .skills-grid { grid-template-columns: repeat(3, 1fr) !important; }
+          }
+        `}</style>
 
-          {/* Main heading */}
-          <h2
-            style={{
-              fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              lineHeight: 1.1,
-              marginBottom: "18px",
-              background: "linear-gradient(135deg, #FFFFFF 20%, #94A3B8 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            Skills &amp; Technologies
-          </h2>
-
-          {/* Subtitle */}
-          <p
-            style={{
-              fontSize: "15px",
-              color: "#718096",
-              maxWidth: "480px",
-              margin: "0 auto 28px",
-              lineHeight: 1.65,
-            }}
-          >
-            Tools and technologies I use to build intelligent AI-powered solutions.
-          </p>
-
-          {/* Gradient divider */}
-          <div
-            style={{
-              width: "120px",
-              height: "3px",
-              borderRadius: "2px",
-              background: "linear-gradient(to right, #00E5CC, #A78BFA, transparent)",
-              margin: "0 auto",
-              boxShadow: "0 0 12px rgba(0,229,204,0.4)",
-            }}
-            aria-hidden="true"
-          />
-        </motion.div>
-
-        {/* ── 3×2 card grid ─────────────────────────────────────── */}
-        <motion.div
-          variants={reduced ? {} : containerV}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.08 }}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(1, 1fr)",
-            gap: "20px",
-          }}
-          className="skills-grid"
-        >
-          <style>{`
-            @media (min-width: 640px) {
-              .skills-grid { grid-template-columns: repeat(2, 1fr) !important; }
-            }
-            @media (min-width: 1024px) {
-              .skills-grid { grid-template-columns: repeat(3, 1fr) !important; }
-            }
-          `}</style>
-
-          {categories.map((cat, i) => (
-            <SkillCard key={cat.label} category={cat} />
-          ))}
-        </motion.div>
-      </div>
-    </section>
+        {categories.map((cat) => (
+          <SkillCard key={cat.label} category={cat} />
+        ))}
+      </motion.div>
+    </AccordionSection>
   )
 }
