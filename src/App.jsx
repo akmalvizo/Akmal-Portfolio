@@ -1,35 +1,40 @@
-import Navbar from "./components/layout/Navbar"
-import Footer from "./components/layout/Footer"
-import Hero from "./components/sections/Hero"
-import About from "./components/sections/About"
-import Skills from "./components/sections/Skills"
-import Projects from "./components/sections/Projects"
-import MLWorkflow from "./components/sections/MLWorkflow"
-import Experience from "./components/sections/Experience"
-import Certifications from "./components/sections/Certifications"
-import Contact from "./components/sections/Contact"
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import Navbar from './components/layout/Navbar'
+import Footer from './components/layout/Footer'
+import Contact from './components/sections/Contact'
+import HomePage           from './pages/HomePage'
+import AboutPage          from './pages/AboutPage'
+import SkillsPage         from './pages/SkillsPage'
+import ProjectsPage       from './pages/ProjectsPage'
+import WorkflowPage       from './pages/WorkflowPage'
+import ExperiencePage     from './pages/ExperiencePage'
+import CertificationsPage from './pages/CertificationsPage'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+  return null
+}
 
 export default function App() {
   return (
     <>
-      {/* Skip navigation — accessibility first focusable element */}
-      <a href="#main-content" className="skip-nav">
-        Skip to main content
-      </a>
-
+      <a href="#main-content" className="skip-nav">Skip to main content</a>
+      <ScrollToTop />
       <Navbar />
-
       <main id="main-content">
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <MLWorkflow />
-        <Experience />
-        <Certifications />
+        <Routes>
+          <Route path="/"               element={<HomePage />} />
+          <Route path="/about"          element={<AboutPage />} />
+          <Route path="/skills"         element={<SkillsPage />} />
+          <Route path="/projects"       element={<ProjectsPage />} />
+          <Route path="/workflow"       element={<WorkflowPage />} />
+          <Route path="/experience"     element={<ExperiencePage />} />
+          <Route path="/certifications" element={<CertificationsPage />} />
+        </Routes>
         <Contact />
       </main>
-
       <Footer />
     </>
   )
