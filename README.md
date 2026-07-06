@@ -4,7 +4,7 @@ A production-ready, dark-themed portfolio for a Junior Machine Learning Engineer
 
 **🔗 Live Demo:** [akmal-vizo-portfolio.vercel.app](https://akmal-vizo-portfolio.vercel.app/)
 
-![Portfolio Preview](./preview.png)
+![Portfolio Preview](docs/preview.png)
 
 ---
 
