@@ -80,7 +80,7 @@ export const certifications = [
   },
   {
     id: 12,
-    title: "Decode Labs",
-    verifyLink: "",
+    title: "AI Internship-Decode Labs",
+    verifyLink: "https://www.decodelabs.tech/certificate?email=akmal.vizo%40gmail.com&studentId=AI062101",
   },
 ]
