@@ -2,7 +2,9 @@
 
 A production-ready, dark-themed portfolio for a Junior Machine Learning Engineer.
 
-**Live:** [Deploy link here after Vercel publish]
+**🔗 Live Demo:** [akmal-vizo-portfolio.vercel.app](https://akmal-vizo-portfolio.vercel.app/)
+
+![Portfolio Preview](./preview.png)
 
 ---
 
@@ -60,23 +62,27 @@ All personal content lives in `src/data/` — no component changes needed:
 | AK logo | `src/assets/ak-logo.png` |
 | Resume PDF | `public/resume/resume.pdf` |
 | Favicon | `public/favicon.svg` |
+| Preview screenshot | `preview.png` (used in this README) |
 
 ---
 
 ## Deploy to Vercel
 
 ### Option A — GitHub integration (recommended)
+
 1. Push this repo to GitHub
 2. Go to [vercel.com](https://vercel.com) → New Project → Import from GitHub
 3. Vercel auto-detects Vite — click **Deploy**
 
 ### Option B — Vercel CLI
+
 ```bash
 npm i -g vercel
 vercel
 ```
 
 ### Vercel settings (auto-detected, no manual config needed)
+
 | Setting | Value |
 |---|---|
 | Framework | Vite |
@@ -99,6 +105,7 @@ VITE_EMAILJS_PUBLIC_KEY=your_public_key
 
 ---
 
-## License
+## Connect
 
-MIT
+- **Portfolio:** [akmal-vizo-portfolio.vercel.app](https://akmal-vizo-portfolio.vercel.app/)
+- **GitHub:** [@akmalvizo](https://github.com/akmalvizo)
