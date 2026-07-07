@@ -291,11 +291,12 @@ export default function HomePage() {
               Explore My Portfolio
             </p>
             <h2 style={{
-              fontSize: "clamp(1.9rem, 4vw, 2.8rem)", fontWeight: 800,
+              fontSize: "clamp(1.25rem, 4.5vw, 2.8rem)", fontWeight: 800,
               letterSpacing: "-0.03em", lineHeight: 1.15,
               background: "linear-gradient(135deg, #FFFFFF 20%, #94A3B8 100%)",
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
               backgroundClip: "text",
+              whiteSpace: "nowrap",
             }}>
               What I've Built &amp; Who I Am
             </h2>
