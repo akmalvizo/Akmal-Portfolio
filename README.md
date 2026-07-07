@@ -89,7 +89,6 @@ vercel
 | Build Command | `npm run build` |
 | Output Directory | `dist` |
 | Install Command | `npm install` |
-| Root Directory | *(leave empty)* |
 
 ---
 
