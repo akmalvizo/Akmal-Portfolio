@@ -27,8 +27,8 @@ const SKILL_CHIPS = [
 ]
 
 const STATS = [
-  { value: "6+",   label: "AI Projects" },
-  { value: "10+",  label: "Certificates" },
+  { value: "10+",   label: "AI Projects" },
+  { value: "12+",  label: "Certificates" },
   { value: "2026", label: "CS Graduated" },
 ]
 

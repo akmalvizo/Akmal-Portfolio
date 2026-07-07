@@ -24,8 +24,8 @@ export const about = {
     "My goal is to join an AI-focused team where I can contribute to meaningful ML projects, grow alongside talented engineers, and keep pushing the boundaries of what intelligent systems can do.",
   ],
   stats: [
-    { value: "6+", label: "AI Projects Built" },
-    { value: "10+", label: "Certifications" },
+    { value: "10+", label: "AI Projects Built" },
+    { value: "12+", label: "Certifications" },
     { value: "2026", label: "BS Computer Science Graduated" },
     { value: "∞", label: "Curiosity Level" },
   ],
